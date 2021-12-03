@@ -99,9 +99,13 @@ if __name__ == '__main__' :
     image = cv2.resize(src, (int(nc*(700/nr)), 700), interpolation=cv2.INTER_AREA)
     Path("./Labels/").mkdir(exist_ok=True)
     Path("./Labels/"+ str(picName)).mkdir(exist_ok=True)
-    with open("./Labels/" + str(picName) + "/" + "data.json", 'a+') as data:
-        if os.stat("./Labels/" + str(picName) + "/" + "data.json").st_size > 0:
-            result = json.load(data)        
+    if (os.path.isfile("./Labels/" + str(picName) + "/" + "data.json")):
+        with open("./Labels/" + str(picName) + "/" + "data.json", 'r') as data:
+            if os.stat("./Labels/" + str(picName) + "/" + "data.json").st_size > 0:
+                result = json.load(data)        
+    else:
+        open("./Labels/" + str(picName) + "/" + "data.json", 'w+')
+    
     while True:
         bbox = cv2.selectROI(image, False)
         Gui()
