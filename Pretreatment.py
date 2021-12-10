@@ -64,8 +64,9 @@ def Gui():
         button.grid(column=2, row=i)
         
     accidental = tk.IntVar()
+    accidental_labels = ['bb', 'b', '', '#', '##']
     for i in range(2,-3 ,-1):
-        button = tk.ttk.Radiobutton(app, text=i, variable=accidental, value=i)
+        button = tk.ttk.Radiobutton(app, text=accidental_labels[i+2], variable=accidental, value=i)
         button.grid(column=3, row=-(i-2))
     
     doneButton = tk.Button(app, text="Done", width=8,
@@ -108,14 +109,16 @@ if __name__ == '__main__' :
     
     while True:
         bbox = cv2.selectROI(image, False)
+        print(cv2.getWindowProperty('just_a_window', cv2.WND_PROP_VISIBLE))
+    
         Gui()
         SaveNote(src,bbox)
+        with open("./Labels/" + str(picName) + "/" + "data.json", 'w') as outfile:
+            json.dump(result, outfile)
+        
         k = cv2.waitKey(0) & 0xff
         
-        
         if k == ord('q') : 
-            with open("./Labels/" + str(picName) + "/" + "data.json", 'w') as outfile:
-                json.dump(result, outfile)
             break
     
     cv2.destroyAllWindows()
