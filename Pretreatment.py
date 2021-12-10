@@ -1,36 +1,17 @@
 import cv2
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from pathlib import Path
 import os
 from os import listdir
 from os.path import isfile, join
 import json
 import numpy as np
-picName = ""
 result = []
 def SelectFile():
-    Path("./Pictures").mkdir(exist_ok=True)
-    files = [f for f in listdir('./Pictures') if isfile(join('./Pictures', f))]
-    
-    def Confirm():
-        global picName
-        picName = fileLocation.get()
-        app.destroy()
-    app = tk.Tk() 
-    app.geometry('142x70')
-    labelTop = tk.Label(app,text = "Choose your Picture")
-    labelTop.grid(column=0, row=0)
-    
-    fileLocation = tk.ttk.Combobox(app, values = files)
-    fileLocation.grid(column=0, row=1)
-    fileLocation.current(0)
-    
-    ConfirmButton = tk.Button(app, text="Done", width=8,
-                                  command=Confirm)
-    ConfirmButton.grid(column=0, row=2)
-    
-    app.mainloop()
+    return filedialog.askopenfilename(
+        initialdir='./Pictures', title="select file", 
+        filetypes = (("png files","*.png"),("all files","*.*"))).split('/')[-1]
 
 def Gui():
     
@@ -94,8 +75,8 @@ def SaveNote(src, bbox):
     cv2.imwrite("./Labels/"+str(picName)+"/"+str(len(result))+".png", resultImg)
 
 if __name__ == '__main__' :
-    SelectFile()
-    src = cv2.imread("./Pictures/" + str(picName), cv2.IMREAD_COLOR)
+    picName = SelectFile()
+    src = cv2.imread('./Pictures/' + str(picName), cv2.IMREAD_COLOR)
     nr,nc = src.shape[:2]
     image = cv2.resize(src, (int(nc*(700/nr)), 700), interpolation=cv2.INTER_AREA)
     Path("./Labels/").mkdir(exist_ok=True)
@@ -109,7 +90,8 @@ if __name__ == '__main__' :
     
     while True:
         bbox = cv2.selectROI(image, False)
-        print(cv2.getWindowProperty('just_a_window', cv2.WND_PROP_VISIBLE))
+        if not bbox:
+            break
     
         Gui()
         SaveNote(src,bbox)
