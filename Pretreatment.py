@@ -41,10 +41,14 @@ class App(tk.Tk):
         doneButton.grid(column=0, row=19)
         selectButton = tk.Button(self, text="select", width=8, command=self.select)
         selectButton.grid(column=1, row=19)
+        self.display = tk.StringVar(self, value="")
+        label = tk.Label(self, textvariable=self.display)
+        label.grid(column=0, row=20)
         self.load()
     
     def load(self):
         picName = filedialog.askopenfilename(
+            parent=self,
             initialdir='./Pictures', title="select file", 
             filetypes = (("png files","*.png"),("all files","*.*"))).split('/')[-1]
 
@@ -76,10 +80,11 @@ class App(tk.Tk):
         self.save_note()
         with open(self.path, 'w') as outfile:
             json.dump(self.result, outfile)
-        cv2.destroyAllWindows()
+        self.display.set('saved')
 
     def select(self):        
         self.bbox = cv2.selectROI(self.image, False)
+        self.display.set('selected')
 
     def save_note(self):
         bbox = self.bbox
