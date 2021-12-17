@@ -7,8 +7,8 @@ import json
 import numpy as np
 
 
-SELECT_COLOR = '#FF0000'
-ACTIVE_COLOR = '#00FF00'
+SELECT_COLOR = '#00FF00'
+ACTIVE_COLOR = '#FF0000'
 
 
 class App(tk.Tk):
@@ -24,8 +24,8 @@ class App(tk.Tk):
                 self, text=noteList[-(i-9)],
                 variable=self.pitch,
                 value=i,
+                fg=ACTIVE_COLOR,
                 selectcolor=SELECT_COLOR,
-                activeforeground=ACTIVE_COLOR,
             )
             button.grid(column=0, row=-(i-9))
 
@@ -37,8 +37,8 @@ class App(tk.Tk):
                 text=i,
                 variable=self.duration,
                 value=i,
+                fg=ACTIVE_COLOR,
                 selectcolor=SELECT_COLOR,
-                activeforeground=ACTIVE_COLOR,
             )
             button.grid(column=1, row=durations.index(i))
 
@@ -49,8 +49,8 @@ class App(tk.Tk):
                 text=i,
                 variable=self.dots,
                 value=i,
+                fg=ACTIVE_COLOR,
                 selectcolor=SELECT_COLOR,
-                activeforeground=ACTIVE_COLOR,
             )
             button.grid(column=2, row=i)
 
@@ -63,8 +63,8 @@ class App(tk.Tk):
                 text=accidental_labels[i],
                 variable=self.accidental,
                 value=value,
+                fg=ACTIVE_COLOR,
                 selectcolor=SELECT_COLOR,
-                activeforeground=ACTIVE_COLOR,
             )
             button.grid(column=3, row=i)
 
