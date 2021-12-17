@@ -50,7 +50,7 @@ class App(tk.Tk):
         picName = filedialog.askopenfilename(
             parent=self,
             initialdir='./Pictures', title="select file", 
-            filetypes = (("png files","*.png"),("all files","*.*"))).split('/')[-1]
+            filetypes = (("all files","*.*"),)).split('/')[-1]
 
         self.picName = picName
         src = cv2.imread('./Pictures/' + str(picName), cv2.IMREAD_COLOR)
