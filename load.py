@@ -66,7 +66,19 @@ def save(data):
     np.savez_compressed('data.npz', **data)
 
 
+def hist(data):
+    for key, value in data.items():
+        if key == 'images':
+            continue
+        print(key, value)
+        plt.figure()
+        plt.title(key)
+        plt.hist(value)
+    plt.show()
+
+
 if __name__ == '__main__':
     data = load()
     print(data['images'].shape)
-    save(data)
+    hist(data)
+    # save(data)
