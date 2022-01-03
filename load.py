@@ -80,5 +80,5 @@ def hist(data):
 if __name__ == '__main__':
     data = load()
     print(data['images'].shape)
-    hist(data)
-    # save(data)
+    # hist(data)
+    save(data)
