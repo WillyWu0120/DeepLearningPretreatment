@@ -38,7 +38,7 @@ class Network:
         self.preprocessing()
 
     def load_weights(self, path):
-        self.model.load_weights()
+        self.model.load_weights(path)
 
     def save_weights(self, path):
         self.model.save_weights(path)
@@ -70,5 +70,6 @@ if __name__ == '__main__':
     network = Network()
     network.load_data()
     network.train()
+    # network.load_weights('./checkpoints/checkpoint')
     network.evaluate()
     network.save_weights('./checkpoints/checkpoint')
